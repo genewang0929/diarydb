@@ -46,7 +46,7 @@ const FolderSchema = new Schema({
         type: String,
         required: true
     },
-    diary: [Schema.Types.Mixed]
+    diary: [DiarySchema]
 });
 
 
@@ -78,7 +78,7 @@ const UserSchema = new Schema({
     accessKey: {
         type: String
     },
-    folder: [Schema.Types.Mixed]
+    folder: [FolderSchema]
 });
 
 module.exports = User = mongoose.model('user', UserSchema);
