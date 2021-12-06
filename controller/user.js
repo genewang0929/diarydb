@@ -1,6 +1,4 @@
 const User = require('../model/userInitDB');
-// const Diary = require('../model/diaryInitDB');
-// const Folder = require('../model/folderInitDB');
 
 exports.getUser = async (req, res) => {
     try {
@@ -29,7 +27,7 @@ exports.postUser = async (req, res) => {
         diary: [diaryA]
     };
     const userA = new User({
-        userID: '1',
+        userID: 'testUsername',
         email: 'genewang7@gmail.com',
         password: 'ssssss',
         code: false,
