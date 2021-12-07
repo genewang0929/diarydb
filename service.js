@@ -2,8 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const UserRoutes = require('./routes/userRoutes');
-const FolderRoutes = require('./routes/folderRoutes');
-const DiaryRoutes = require('./routes/diaryRoutes');
+const MailRoutes = require('./routes/mailRoutes');
+const VerifyRoutes = require('./routes/verifyRoutes');
+const SignUpRoutes = require('./routes/sign_upRoutes');
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 3000;
@@ -26,8 +27,9 @@ app.use((req, res, next) => {
 });
   
 app.use(UserRoutes);
-// app.use(FolderRoutes);
-// app.use(DiaryRoutes);
+app.use(MailRoutes);
+app.use(SignUpRoutes);
+app.use(VerifyRoutes);
   
 // app.get('/', (req, res) => {
 //   res.send('Hello World');
