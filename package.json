@@ -8,17 +8,22 @@
     "jsonwebtoken": "^8.5.1",
     "mongo": "^0.1.0",
     "mongoose": "^6.0.14",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "should": "^13.2.3"
   },
   "name": "diarydb",
   "version": "1.0.0",
   "main": "service.js",
-  "devDependencies": {},
   "scripts": {
-    "start": "node service.js"
+    "start": "node service.js",
+    "test": "mocha   --exit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^9.1.3"
+  }
 }

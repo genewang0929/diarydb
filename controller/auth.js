@@ -9,19 +9,18 @@ exports.login = async (req, res) => {
         User.findOne({userID: id}, function(err, user){
             if(err){
                 console.log(err);
-                res.json({
+                res.status(500).json({
                     msg: "user not found!"
                 });
             }
             else{
                 console.log(user);
                 if(user.password == password){
-                    res.json({
+                    res.status(200).json({
                         token: jwt.sign({userID:user.userID}, 'abcd', {
                             expiresIn: "60s"
                         }),
                         userID: user.userID,
-                        code: 200
                     });
                 }
                 else 
