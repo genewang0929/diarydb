@@ -3,54 +3,25 @@ const chai = require('chai');
 var should = require('should');
 var app = require('../service');
 const request = supertest(app);
+const config = require('../config');
+const env = process.env.NODE_ENV || 'test';
 const mongoose = require('mongoose');
 
+let token;
 
+before(async function () {
+    await mongoose
+        .connect(config.db[env], config.dbParams)
+        .then(() => { console.log('MongoDB Connected ')})
+        .catch(err => console.log(err));
+});
 
 describe("test login system",  () => {
-        
-    /*before(function() {
-        this.timeout(60000);
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                mongoose
-                    .connect('mongodb://mongo:27017/diarydb', { useNewUrlParser: true })
-                    .then(() => {
-                        console.log('MongoDB Connected ');
-                        isErr = 0;
-                    })
-                    .catch(err => console.log(err))
-            }, 60000);
-        });
-      });*/
-    /*before(async function () {
-        this.timeout(60000);
-        let isErr = 1;
-        for(let i = 0; i < 3; i++){
-            if(isErr){
-                console.log("hello");
-                await mongoose
-                    .connect('mongodb://mongo:27017/diarydb', { useNewUrlParser: true })
-                    .then(() => {
-                        console.log('MongoDB Connected ', i);
-                        isErr = 0;
-                    })
-                    .catch(err => console.log("---"))
-            }
-            else{
-                break;
-            }
-        }
-        console.log("end");
-    });*/
 
-
-    it("should return token", async function(done) {
-        console.log("in");
-        this.timeout(60000);
+    it("should have status 200", function(done) {
         let user = {
             userID: "testUsername",
-            password: "123456"
+            password: "ssssss"
         }
         request
         .post('/login')
@@ -58,7 +29,23 @@ describe("test login system",  () => {
         .send(user)
         .expect(200)
         .end(function(err, res){
-            res.should.have.property('token');
+            token = res.body.token;
+            should.not.exist(err);
+            done();
+        })
+    })
+    
+});
+
+describe("test verify system",  () => {
+
+    it("should have status 200", function(done) {
+        request
+        .post('/verify')
+        .set('Content-Type', 'application/json')
+        .set('authorization', token)
+        .expect(200)
+        .end(function(err, res){
             should.not.exist(err);
             done();
         })
