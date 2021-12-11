@@ -1,19 +1,23 @@
 const User = require('../model/userInitDB');
 const jwt = require("jsonwebtoken");
+const mongoose = require('mongoose');
 
 exports.login = async (req, res) => {
-    try{
+    try{ 
+        console.log(req.body);
         let id = req.body.userID;
         let password = req.body.password;
-        console.log(id);
+
         User.findOne({userID: id}, function(err, user){
             if(err){
                 console.log(err);
+                console.log("it's error");
                 res.status(500).json({
-                    msg: "user not found!"
+                    msg: "userID " + id + " is not found!"
                 });
             }
             else{
+                console.log("success !!!!!");
                 console.log(user);
                 if(user.password == password){
                     res.status(200).json({
