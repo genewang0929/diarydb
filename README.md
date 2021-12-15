@@ -31,7 +31,7 @@ docker-compose up
         "password": "tttttt"
     }
 
-  ### 寄送驗證碼入信箱 (HTTP POST):
+  ### 重送驗證碼到信箱 (HTTP POST):
     localhost/resendCode
     
   ### 確認驗證碼 (HTTP POST):
