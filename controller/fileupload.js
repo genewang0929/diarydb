@@ -77,7 +77,7 @@ exports.fileUpload= async(req, res) => {
 		let url=result.data.webViewLink;
 
        	res.status(201).json({	// 201: Create
-			msg: "The file has been upload!"
+			url
 		});
     }catch (err){
         res.status(500).json({	// 500: Internal Server Error
