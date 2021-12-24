@@ -8,7 +8,7 @@ const router = express.Router();
 router.post('/randomPassword', accountController.randomPassword);
 router.post('/randomPassword', mailController.mail);
 
-router.post('/resetPassword', authController.verify);
+//router.post('/resetPassword', authController.verify);
 router.post('/resetPassword', accountController.checkUser);
 router.post('/resetPassword', accountController.resetPassword);
 
