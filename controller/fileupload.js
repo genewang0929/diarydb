@@ -29,6 +29,7 @@ const drive =google.drive({
 
 var fileId='';
 exports.fileUpload= async(req, res) => {
+	res.header('Access-Control-Allow-Origin', '*');
 	try{    
 		if(!req.file) {
             res.send({
