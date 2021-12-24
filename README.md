@@ -98,14 +98,9 @@ docker-compose up
         folderName: 'MYFOLDER'
     }
   
-<<<<<<< HEAD
-  回傳狀態:正常->200
-          發現相同資料夾->409
-=======
   回傳狀態:正常->201
   
   發現相同資料夾->409
->>>>>>> b1c04414167eb9cf1bab8b3ca79515a2dfd3597f
 
   ### 取得所有資料夾 (HTTP GET):
     localhost/user/:email/folder
@@ -128,28 +123,17 @@ docker-compose up
         folderName: 'mYfOlDeR'
     }
 
-<<<<<<< HEAD
-  回傳狀態:正常->200
-          發現相同資料夾->409  
-=======
   回傳狀態:正常->204
   
   發現相同資料夾->409  
->>>>>>> b1c04414167eb9cf1bab8b3ca79515a2dfd3597f
 
   ### 刪除資料夾 (HTTP DELETE):
     localhost/user/:email/:folderName
     ex: localhost/user/genewang7@gmail.com/MYFOLDER
 
-<<<<<<< HEAD
-  回傳狀態:正常->200  
-
-  ### 新增日記 (HTTP POST):
-=======
   回傳狀態:正常->204 
 
   ### 將日記新增至指定資料夾 (HTTP POST):
->>>>>>> b1c04414167eb9cf1bab8b3ca79515a2dfd3597f
     localhost/user/:email/:folderName
     ex: localhost/user/genewang7@gmail.com/Uncategorized 
     
@@ -165,14 +149,9 @@ docker-compose up
         "isFavored": false
     }
 
-<<<<<<< HEAD
-  回傳狀態:正常->200
-          發現相同日記->409 
-=======
   回傳狀態:正常->201
   
   發現相同日記->409 
->>>>>>> b1c04414167eb9cf1bab8b3ca79515a2dfd3597f
 
   ### 透過title取得日記 (HTTP GET):
     localhost/user/:email/:folderName/:title
@@ -222,24 +201,15 @@ docker-compose up
         "isFavored": false
     }
 
-<<<<<<< HEAD
-  回傳狀態:正常->200
-          發現相同日記->409  
-=======
   回傳狀態:正常->204
   
   發現相同日記->409  
->>>>>>> b1c04414167eb9cf1bab8b3ca79515a2dfd3597f
     
   ### 刪除日記 (HTTP DELETE):
     localhost/user/:email/:folderName/:title
     ex: localhost/user/genewang7@gmail.com/Uncategorized/MYDIARY
 
-<<<<<<< HEAD
-  回傳狀態:正常->200  
-=======
   回傳狀態:正常->204  
->>>>>>> b1c04414167eb9cf1bab8b3ca79515a2dfd3597f
   
   ### 分享連結 (HTTP GET):
     localhost/shareLink/:email/:folderName/:title
