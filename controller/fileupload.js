@@ -28,22 +28,26 @@ const drive =google.drive({
 
 
 var fileId='';
-exports.fileupload= async(req, res) => {
+exports.fileUpload= async(req, res) => {
+	res.header('Access-Control-Allow-Origin', '*');
 	try{    
 		if(!req.file) {
             res.send({
                 status: false,
                 message: 'No file uploaded'
-        	}); 
+			}); 
+			res.status(500).json({ // 500: Internal Server Error
+				msg: "err"
+			});
         }
-        console.log(req.file);
+        //console.log(req.file);
         const { foo } = req.file;
-        console.log(req.file.mimetype);
+        //console.log(req.file.mimetype);
         let file = req.file;
         //console.log(file.file.path);
        	//uploadFile(file);
 
-       	let bufferStream=new stream.PassThrough();
+		let bufferStream=new stream.PassThrough();
 		bufferStream.end(file.buffer);
 		const response =await drive.files.create({
 			requestBody:{
@@ -55,7 +59,7 @@ exports.fileupload= async(req, res) => {
 				body:bufferStream,
 			},
 		});
-		console.log(response.data.id);
+		//console.log(response.data.id);
 		fileId=response.data.id;
 
 		await drive.permissions.create({
@@ -70,13 +74,16 @@ exports.fileupload= async(req, res) => {
 			fileId:fileId,
 			fields:'webViewLink, webContentLink',
 		});
-		console.log(result.data.webViewLink);
+		//console.log(result.data.webViewLink);
 		let url=result.data.webViewLink;
 
-       	res.status(201).json({url});
+       	res.status(201).json({	// 201: Create
+			url
+		});
     }catch (err){
-        console.log(err);
-        res.status(500).json({msg:"err"});
+        res.status(500).json({	// 500: Internal Server Error
+			msg:"err"
+		});
     } 
 
 

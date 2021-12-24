@@ -10,7 +10,7 @@ describe("test sign up", () => {
     it("should have status 250", function(done) {
         this.timeout("5000");
         let user = {
-            email: "00857028@email.ntou.edu.tw",
+            email: "diaryproject1234@gmail.com",
             password: "tttttt"
         }
         request
@@ -23,18 +23,37 @@ describe("test sign up", () => {
             done();
         })
     })
+
+    it("should respond a message indicating that user post a duplicate email, having status code 409", function(done) {
+        this.timeout("5000");
+        let user = {
+            email: "diaryproject1234@gmail.com",
+            password: "tttttt"
+        }
+        request
+        .post('/signUp')
+        .set('Content-Type', 'application/json')
+        .send(user)
+        .expect(409)
+        .end(function(err, res){
+            should.not.exist(err);
+            done();
+        })
+    })
+
 });
 
+var userCode = "";
+
 //verify after sign up
-describe("test verify", () => {
+describe("get code", () => {
     
-    var userCode = "";
     // get code
-    it("should have status 200", function(done) {
+    it("should respond a code, having status 200", function(done) {
         this.timeout("5000");
 
         request
-        .get('/user/00857028@email.ntou.edu.tw')
+        .get('/user/diaryproject1234@gmail.com')
         .expect(200)
         .end(function(err, res){
             userCode = res.body.code;
@@ -42,18 +61,42 @@ describe("test verify", () => {
             done();
         })
     })
+});
+
+//verify after sign up
+describe("test verify", () => {
     
-    it("should have status 201", function(done) {
+
+    // test entering wrong code
+    it("should have status 401", function(done) {
         this.timeout("5000");
         let user = {
-            email: "00857028@email.ntou.edu.tw",
+            email: "diaryproject1234@gmail.com",
+            code: ""
+        }
+        request
+        .post('/verify')
+        .set('Content-Type', 'application/json')
+        .send(user)
+        .expect(401)
+        .end(function(err, res){
+            should.not.exist(err);
+            done();
+        })
+    })
+
+    //test entering correct code
+    it("should have status 204", function(done) {
+        this.timeout("5000");
+        let user = {
+            email: "diaryproject1234@gmail.com",
             code: userCode
         }
         request
         .post('/verify')
         .set('Content-Type', 'application/json')
         .send(user)
-        .expect(200)
+        .expect(204)
         .end(function(err, res){
             should.not.exist(err);
             done();
@@ -65,11 +108,11 @@ describe("test verify", () => {
 //delete after create user
 describe("test delete user", () => {
 
-    it("should have status 200", function(done) {
+    it("should have status 204", function(done) {
         this.timeout("5000");
         request
-        .delete('/user/00857028@email.ntou.edu.tw')
-        .expect(200)
+        .delete('/user/diaryproject1234@gmail.com')
+        .expect(204)
         .end(function(err, res){
             should.not.exist(err);
             done();
