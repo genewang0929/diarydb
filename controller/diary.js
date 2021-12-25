@@ -87,7 +87,7 @@ exports.getDiaryByDate = (req, res) => {
 };
 
 // 檢查是否新增到相同名稱diary
-exports.isDuplicate = (req, res, next) => {
+exports.postIsDuplicate = (req, res, next) => {
 
     const diaryA = {
         title: req.body.title,   //req.body.title
@@ -148,6 +148,40 @@ exports.postDiary = (req, res) => {
         }
     );
 };
+
+// 檢查是否新增到相同名稱diary
+exports.putIsDuplicate = (req, res, next) => {
+    const diaryA = {
+        title: req.body.title,   //req.body.title
+        content: req.body.content,   //req.body.content
+        date: req.body.date,   //req.body.date
+        tag: req.body.tag,   //req.body.tag
+        filesURL: req.body.filesURL,    //req.body.filesURL
+        picURL: req.body.picURL,    //req.body.picURL
+        videoURL: req.body.videoURL,   //req.body.videoURL
+        isFavored: req.body.isFavored,    //req.body.isFavored
+        markdown: markdown.render(String(req.body.content))
+    };
+
+    User.find({ email: req.params.email }, (err, docs) => {
+        if (err) 
+            return res.status(500).json({msg: err});
+        
+        const folders = docs[0].toObject().folder;
+        const folder = folders.find((item, index, array) => {
+            return item.folderName === req.params.folderName;
+        });
+        const diaries = folder.diary;
+        const diary = diaries.find((item, index, array) => {
+            return item.title === req.body.title;
+        });
+
+        if (diary !== undefined && diary.title !== req.params.title)    //若找到相同title，且並非正在修改的那筆diary，則為duplicate 
+            return res.status(409).json({ msg: "Found duplicate diary title." });  
+
+        next();
+    })
+}
 
 //修改日記內容
 exports.putDiaryByTitle = (req, res) => {

@@ -132,7 +132,7 @@ describe('Diary Controller Test', () => {
     describe('PUT/ put a diary in a folder', () => {
         it('should respond an object, having status 204', function(done) {
             const diaryA = {
-                title: 'TESTDIARY',   //req.body.title
+                title: 'testdiary',   //req.body.title
                 content: 'SHGSDIG;ASIHGIS;G',   //req.body.content
                 date: Date.now(),   //req.body.date
                 tag: ['tagSSSS'],   //req.body.tag
@@ -148,7 +148,6 @@ describe('Diary Controller Test', () => {
             .expect(204)
             .end(function(err, res) {
                 should.not.exist(err);
-                should(res.body).be.a.Object();
                 done();
             })
         })

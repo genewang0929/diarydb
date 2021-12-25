@@ -27,7 +27,7 @@ exports.getFolderByName = (req, res) => {
 };
 
 //檢查資料夾重複命名
-exports.isDuplicate = (req, res, next) => {
+exports.postIsDuplicate = (req, res, next) => {
     const folderA = {
         folderName: req.body.folderName,      //req.body.folderName
         diary: []
@@ -67,6 +67,29 @@ exports.postFolder = (req, res) => {
         }
     );
 };
+
+exports.putIsDuplicate = (req, res, next) => {
+    const folderA = {
+        folderName: req.body.folderName,      //req.body.folderName
+        diary: []
+    };
+
+    User.find({ email: req.params.email }, (err, docs) => {
+        if (err)
+            return res.status(500).json({msg: err});
+        else {
+            const folders = docs[0].toObject().folder;
+            const folder = folders.find((item, index, array) => {
+                return item.folderName === req.body.folderName;
+            });
+            
+            if (folder !== undefined && folder.folderName !== req.params.folderName) 
+                return res.status(409).json({ msg: "Found duplicate folder name." });  
+            
+            next();
+        }
+    });
+}
 
 //修改資料夾名稱
 exports.putFolder = (req, res) => {

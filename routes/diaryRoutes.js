@@ -17,10 +17,10 @@ router.get('/search/:email', diaryController.getDiaryBySearch);
 router.get('/date/:email', diaryController.getDiaryByDate);
 
 //POST diary in specific folder by folderName
-router.post('/user/:email/:folderName', diaryController.isDuplicate, diaryController.postDiary);
+router.post('/user/:email/:folderName', diaryController.postIsDuplicate, diaryController.postDiary);
 
 //PUT specific diary by title in specific folder by folderName
-router.put('/user/:email/:folderName/:title', diaryController.isDuplicate, diaryController.putDiaryByTitle);
+router.put('/user/:email/:folderName/:title', diaryController.putIsDuplicate, diaryController.putDiaryByTitle);
 
 //DELETE specific diary by title in specific folder by folderName
 router.delete('/user/:email/:folderName/:title', diaryController.deleteDiaryByTitle)

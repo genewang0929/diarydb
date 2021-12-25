@@ -77,7 +77,6 @@ describe('Folder Controller Test', () => {
             .expect(204)
             .end(function(err, res) {
                 should.not.exist(err);
-                should(res.body).be.a.Object();
                 done();
             })
         })
