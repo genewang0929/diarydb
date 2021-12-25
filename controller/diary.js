@@ -71,17 +71,23 @@ exports.getDiaryByDate = (req, res) => {
         if (err)
             res.status(500).json({msg: err});
         else {
-            let diaryArray = new Array();
+            let folderArray = new Array();
             const folders = docs[0].toObject().folder;
             folders.forEach(folder => {
                 const foundDiary = folder.diary.filter((item, index, array) => {
                     return item.date.yyyymmdd() === req.query.date;
                 });
     
-                if (foundDiary.length > 0)
+                if (foundDiary.length > 0){
+                    let diaryArray = new Array();
                     diaryArray.push(foundDiary);
+                    folderArray.push({
+                        folderName: folder.folderName,
+                        diary:diaryArray
+                    });
+                }
             });
-            res.status(200).json({ diaryArray });
+            res.status(200).json({ folderArray });
         }
     });
 };
