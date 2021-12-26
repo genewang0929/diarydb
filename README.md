@@ -222,9 +222,6 @@ docker-compose up
     
   成功: 200
 
-  ### 上傳圖片 (HTTP POST):
-    localhost/fileupload
-
   ## 管理員系統
   ### 透過email取得使用者 (HTTP GET):
     localhost/user/:email
